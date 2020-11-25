@@ -10,6 +10,7 @@ call plug#begin("~/.vim/plugged")
     Plug 'ggreer/the_silver_searcher'
     Plug 'scrooloose/nerdtree'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'dense-analysis/ale', {'for': 'ruby'}
 call plug#end()
 
 " Config Section
