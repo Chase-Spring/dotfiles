@@ -14,14 +14,22 @@ call plug#begin("~/.vim/plugged")
 call plug#end()
 
 " Config Section
+" Vimscript file settings ------------- {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
 " UI Config
 """"""""""""""""""""""""""""""""""""""""
 let mapleader="\<Space>"
+let maplocalleader="\\"
 syntax enable
 set cursorline
 set number
 set relativenumber
-set scrolloff=20
+set scrolloff=15
 set guifont=jetbrains_mono_semi_light:h13
 set splitright
 set splitbelow
@@ -32,6 +40,40 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+
+" Vim keys and configs
+""""""""""""""""""""""""""""""""""""""""
+augroup filetypes
+    autocmd FileType javascript nnoremap <buffer> <localleader>c I// <esc>
+    autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
+augroup END
+
+" JK no more editing... and training
+inoremap jk <esc>
+inoremap <esc> <nop>
+
+" Stronger H and L to beginning / end of line
+nnoremap H 0
+nnoremap L $
+
+" Slap quotes around visual blocks
+vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
+vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
+
+" Hit vimrc faster
+nnoremap <leader>ev :split $MYVIMRC<cr>/Vim keys and configs<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Folding
+nnoremap <leader>f za
+set foldmethod=syntax
+set foldnestmax=2
+
+" Full cap a word
+" From insert mode
+inoremap <c-u> <esc>viwUea
+" From normal mode
+noremap <c-u> viwUe
 
 " Kill noob crutch arrow keys
 nnoremap <Left>  :echoe "Use h"<CR>
@@ -93,7 +135,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Coc
 " Use gd to go to definition
-nmap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gd <Plug>(coc-definition)
 " Use K to see documentation
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
@@ -115,3 +157,10 @@ inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
+
+
+
+
+
+" ASCII-cat, because why not?
+echom ">^.^<"
