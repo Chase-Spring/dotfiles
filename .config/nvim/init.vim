@@ -62,7 +62,7 @@ vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
 
 " Hit vimrc faster
 nnoremap <leader>ev :split $MYVIMRC<cr>/Vim keys and configs<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>rv :source $MYVIMRC<cr>
 
 " Folding
 nnoremap <leader>f za
@@ -135,9 +135,9 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Coc
 " Use gd to go to definition
-nnoremap <silent> gd <Plug>(coc-definition)
+nmap <silent> <leader>gd <Plug>(coc-definition)
 " Use K to see documentation
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nmap <silent> <leader>K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
