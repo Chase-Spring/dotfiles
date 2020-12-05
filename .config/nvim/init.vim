@@ -1,4 +1,4 @@
-" Plugin Section
+" Load Plugins ------------------------ {{{
 call plug#begin("~/.vim/plugged")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'sheerun/vim-polyglot'
@@ -12,19 +12,9 @@ call plug#begin("~/.vim/plugged")
     Plug 'ryanoasis/vim-devicons'
     Plug 'dense-analysis/ale', {'for': 'ruby'}
 call plug#end()
-
-" Config Section
-" Vimscript file settings ------------- {{{
-augroup filetype_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
 " }}}
 
-" UI Config
-""""""""""""""""""""""""""""""""""""""""
-let mapleader="\<Space>"
-let maplocalleader="\\"
+" UI Config --------------------------- {{{
 syntax enable
 set cursorline
 set number
@@ -34,19 +24,25 @@ set guifont=jetbrains_mono_semi_light:h13
 set splitright
 set splitbelow
 set signcolumn=yes
+set foldmethod=syntax
+set foldnestmax=2
+set foldlevelstart=1
 
-" Spaces and tabs
+" OneDark
+if (has("termguicolors"))
+     set termguicolors
+ endif
+ colorscheme onedark
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+" }}}
 
-" Vim keys and configs
-""""""""""""""""""""""""""""""""""""""""
-augroup filetypes
-    autocmd FileType javascript nnoremap <buffer> <localleader>c I// <esc>
-    autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
-augroup END
+" Remaps ------------------------------ {{{
+let mapleader="\<Space>"
+let maplocalleader="\\"
 
 " JK no more editing... and training
 inoremap jk <esc>
@@ -61,70 +57,55 @@ vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
 vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
 
 " Hit vimrc faster
-nnoremap <leader>ev :split $MYVIMRC<cr>/Vim keys and configs<cr>
+nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>rv :source $MYVIMRC<cr>
 
-" Folding
+" More intuitive folding
 nnoremap <leader>f za
-set foldmethod=syntax
-set foldnestmax=2
 
 " Full cap a word
-" From insert mode
 inoremap <c-u> <esc>viwUea
-" From normal mode
 noremap <c-u> viwUe
+" }}}
 
-" Kill noob crutch arrow keys
-nnoremap <Left>  :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up>    :echoe "Use k"<CR>
-nnoremap <Down>  :echoe "Use j"<CR>
-inoremap <Left>  <ESC>:echoe "Use h"<CR>
-inoremap <Right> <ESC>:echoe "Use l"<CR>
-inoremap <Up>    <ESC>:echoe "Use k"<CR>
-inoremap <Down>  <ESC>:echoe "Use j"<CR>
+" Autocommands ------------------------ {{{
+augroup all_files
+    autocmd!
+    autocmd FileType * exe "normal zr"
+augroup END
 
-" Python
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set fileformat=unix
+augroup vimscript_files
+    autocmd!
+    autocmd FileType vim
+      \ setlocal foldmethod=marker |
+      \ exe "normal zM"
+augroup END
 
-" Integrated Terminal Config
-""""""""""""""""""""""""""""""""""""""""
-" turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
-" start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-" open terminal on ctrl+n
-function! OpenTerminal()
-  split term://bash
-  resize 10
-endfunction
-nnoremap <c-n> :call OpenTerminal()<CR>
+augroup misc_filetypes
+    autocmd!
+    autocmd FileType javascript nnoremap <buffer> <localleader>c I// <esc>
+    autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
+    autocmd FileType python
+        \ setlocal tabstop=4 |
+        \ setlocal softtabstop=4 |
+        \ setlocal shiftwidth=4 |
+        \ setlocal textwidth=79 |
+        \ setlocal expandtab |
+        \ setlocal fileformat=unix
+augroup END
+" }}}
 
-" Plugin Config
-""""""""""""""""""""""""""""""""""""""""
-
-" OneDark
-if (has("termguicolors"))
-     set termguicolors
- endif
- colorscheme onedark
-
-" NERDTree
+" Plugin Configs ---------------------- {{{
+" NERDTree ---------------------------- {{{
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
 " Toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+" }}}
 
-" Fzf
+" Fzf --------------------------------- {{{
 nnoremap <leader>s :FZF<CR>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -132,8 +113,9 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit'
   \}
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+" }}}
 
-" Coc
+" Coc --------------------------------- {{{
 " Use gd to go to definition
 nmap <silent> <leader>gd <Plug>(coc-definition)
 " Use K to see documentation
@@ -157,10 +139,8 @@ inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
-
-
-
-
+" }}}
+" }}}
 
 " ASCII-cat, because why not?
 echom ">^.^<"
