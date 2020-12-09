@@ -18,6 +18,10 @@ call SourceIfExists('~/.vim/plugin/grep-operator.vim')
 " External Plugins
 call plug#begin("~/.vim/plugged")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    let g:coc_global_extensions = [
+                \ 'coc-tsserver',
+                \ 'coc-python',
+                \ ]
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
     Plug 'vim-airline/vim-airline'
@@ -27,7 +31,7 @@ call plug#begin("~/.vim/plugged")
     Plug 'ggreer/the_silver_searcher'
     Plug 'scrooloose/nerdtree'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'dense-analysis/ale', {'for': 'ruby'}
+    Plug 'dense-analysis/ale', {'for': ['ruby']}
 call plug#end()
 " }}}
 
@@ -98,9 +102,13 @@ augroup vimscript_files
       \ exe "normal zM"
 augroup END
 
-augroup misc_filetypes
+augroup js_files
     autocmd!
     autocmd FileType javascript nnoremap <buffer> <localleader>c I// <esc>
+augroup END
+
+augroup python_files
+    autocmd!
     autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
     autocmd FileType python
         \ setlocal tabstop=4 |
@@ -139,10 +147,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 
 " Coc --------------------------------- {{{
-" Use gd to go to definition
-nmap <silent> <leader>d <Plug>(coc-definition)
-" Use K to see documentation
-nmap <silent> <leader>K :call <SID>show_documentation()<CR>
+" Custom functions -------------------- {{{
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -150,14 +155,21 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-" Use <Leader>rn to smart rename
-nmap <leader>rn <Plug>(coc-rename)
-" use <tab> for trigger completion and navigate to the next complete item
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+" }}}
+" Enable eslint if it's there
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+    let g:coc_global_extensions += ['coc-eslint']
+endif
 
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>K :call <SID>show_documentation()<CR>
+nmap <leader>rn <Plug>(coc-rename)
+" Tab in insert mode to trigger completion
 inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
