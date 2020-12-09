@@ -1,0 +1,42 @@
+function! Sorted(l)
+    let new_list = deepcopy(a:l)
+    call sort(new_list)
+    return new_list
+endfunction
+
+function! Append(l, val)
+    let new_list = deepcopy(a:l)
+    call add(new_list, a:val)
+    return new_list
+endfunction
+
+function! Assoc(l, i, val)
+    let new_list = deepcopy(a:l)
+    call new_list[a:i] = a:val
+    return new_list
+endfunction
+
+function! Remove(l, i)
+    let new_list = deepcopy(a:l)
+    call remove(new_list, a:i)
+    return new_list
+endfunction
+
+" Note v:val has the value of the current element when used in map
+function! Mapped(fn, l)
+    let new_list = deepcopy(a:l)
+    call map(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction
+
+function! Filtered(fn, l)
+    let new_list = deepcopy(a:l)
+    call filter(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction
+
+function! Removed(fn, l)
+    let new_list = deepcopy(a:l)
+    call filter(new_list, '!' . string(a:fn) . '(v:val)')
+    return new_list
+endfunction

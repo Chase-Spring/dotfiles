@@ -1,4 +1,21 @@
+" Set Leaders for plugins ------------- {{{
+let mapleader="\<Space>"
+let maplocalleader="\\"
+" }}}
+
 " Load Plugins ------------------------ {{{
+" Source files only if they exist ----- {{{
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+" }}}
+
+" My plugins
+call SourceIfExists('~/.vim/plugin/grep-operator.vim')
+
+" External Plugins
 call plug#begin("~/.vim/plugged")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'sheerun/vim-polyglot'
@@ -41,12 +58,12 @@ set expandtab
 " }}}
 
 " Remaps ------------------------------ {{{
-let mapleader="\<Space>"
-let maplocalleader="\\"
-
 " JK no more editing... and training
 inoremap jk <esc>
 inoremap <esc> <nop>
+
+" Clear the last highlight
+nnoremap <leader><cr> :nohlsearch<cr>
 
 " Stronger H and L to beginning / end of line
 nnoremap H 0
@@ -95,6 +112,12 @@ augroup misc_filetypes
 augroup END
 " }}}
 
+" Vimscript Tweaks -------------------- {{{
+" Set silver searcher as default lgrep command
+set grepprg=ag\ --vimgrep\ $* 
+set grepformat=%f:%l:%c:%m
+" }}}
+
 " Plugin Configs ---------------------- {{{
 " NERDTree ---------------------------- {{{
 let g:NERDTreeShowHidden = 1
@@ -117,7 +140,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Coc --------------------------------- {{{
 " Use gd to go to definition
-nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>d <Plug>(coc-definition)
 " Use K to see documentation
 nmap <silent> <leader>K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
