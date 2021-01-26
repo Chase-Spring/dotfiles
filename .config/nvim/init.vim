@@ -48,6 +48,7 @@ set signcolumn=yes
 set foldmethod=syntax
 set foldnestmax=2
 set foldlevelstart=1
+set hidden
 
 " OneDark
 if (has("termguicolors"))
@@ -61,10 +62,32 @@ set shiftwidth=4
 set expandtab
 " }}}
 
+" Generic Config ----------------------- {{{
+set ignorecase
+set smartcase
+" }}}
+
 " Remaps ------------------------------ {{{
+" Unbind for tmux
+map <C-a> <Nop>
+
 " JK no more editing... and training
 inoremap jk <esc>
 inoremap <esc> <nop>
+
+" Autocomplete characters for coding -- {{{
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
+inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
+inoremap <expr> ' strpart(getline('.'), col('.')-1, 1) == "'" ? "\<Right>" : "''<left>"
+inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : '""<left>'
+inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
+" }}}
 
 " Clear the last highlight
 nnoremap <leader><cr> :nohlsearch<cr>
