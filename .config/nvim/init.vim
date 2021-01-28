@@ -49,6 +49,7 @@ set foldmethod=syntax
 set foldnestmax=2
 set foldlevelstart=1
 set hidden
+set nowrap
 
 " OneDark
 if (has("termguicolors"))
@@ -137,7 +138,6 @@ augroup python_files
         \ setlocal tabstop=4 |
         \ setlocal softtabstop=4 |
         \ setlocal shiftwidth=4 |
-        \ setlocal textwidth=79 |
         \ setlocal expandtab |
         \ setlocal fileformat=unix
 augroup END
