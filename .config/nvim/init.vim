@@ -21,6 +21,7 @@ call plug#begin("~/.vim/plugged")
     let g:coc_global_extensions = [
                 \ 'coc-tsserver',
                 \ 'coc-python',
+                \ 'coc-java',
                 \ ]
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
