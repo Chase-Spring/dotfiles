@@ -102,6 +102,9 @@ nnoremap L $
 vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
 vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
 
+" Search visually selected text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " Hit vimrc faster
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>rv :source $MYVIMRC<cr>
@@ -140,7 +143,8 @@ augroup python_files
         \ setlocal softtabstop=4 |
         \ setlocal shiftwidth=4 |
         \ setlocal expandtab |
-        \ setlocal fileformat=unix
+        \ setlocal fileformat=unix |
+        \ setlocal foldmethod=manual
 augroup END
 " }}}
 
