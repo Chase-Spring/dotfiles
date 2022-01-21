@@ -21,7 +21,6 @@ call plug#begin("~/.vim/plugged")
     let g:coc_global_extensions = [
                 \ 'coc-tsserver',
                 \ 'coc-python',
-                \ 'coc-java',
                 \ ]
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
@@ -32,7 +31,6 @@ call plug#begin("~/.vim/plugged")
     Plug 'ggreer/the_silver_searcher'
     Plug 'scrooloose/nerdtree'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'dense-analysis/ale', {'for': ['ruby']}
 call plug#end()
 " }}}
 
