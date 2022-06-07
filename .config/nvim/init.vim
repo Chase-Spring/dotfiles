@@ -12,15 +12,12 @@ function! SourceIfExists(file)
 endfunction
 " }}}
 
-" My plugins
-call SourceIfExists('~/.vim/plugin/grep-operator.vim')
-
 " External Plugins
 call plug#begin("~/.vim/plugged")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_global_extensions = [
                 \ 'coc-tsserver',
-                \ 'coc-python',
+                \ 'coc-pyright'
                 \ ]
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
@@ -29,8 +26,6 @@ call plug#begin("~/.vim/plugged")
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
     Plug 'ggreer/the_silver_searcher'
-    Plug 'scrooloose/nerdtree'
-    Plug 'ryanoasis/vim-devicons'
 call plug#end()
 " }}}
 
@@ -39,7 +34,7 @@ syntax enable
 set cursorline
 set number
 set relativenumber
-set scrolloff=15
+set scrolloff=5
 set guifont=jetbrains_mono_semi_light:h13
 set splitright
 set splitbelow
@@ -53,8 +48,8 @@ set nowrap
 " OneDark
 if (has("termguicolors"))
      set termguicolors
- endif
- colorscheme onedark
+endif
+colorscheme onedark
 
 set tabstop=4
 set softtabstop=4
@@ -73,7 +68,6 @@ map <C-a> <Nop>
 
 " JK no more editing... and training
 inoremap jk <esc>
-inoremap <esc> <nop>
 
 " Autocomplete characters for coding -- {{{
 inoremap ( ()<left>
@@ -92,27 +86,9 @@ inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
 " Clear the last highlight
 nnoremap <leader><cr> :nohlsearch<cr>
 
-" Stronger H and L to beginning / end of line
-nnoremap H 0
-nnoremap L $
-
-" Slap quotes around visual blocks
-vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
-vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
-
-" Search visually selected text
-vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-
 " Hit vimrc faster
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>rv :source $MYVIMRC<cr>
-
-" More intuitive folding
-nnoremap <leader>f za
-
-" Full cap a word
-inoremap <c-u> <esc>viwUea
-noremap <c-u> viwUe
 " }}}
 
 " Autocommands ------------------------ {{{
@@ -158,8 +134,6 @@ let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
-" Toggle
-nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 " }}}
 
 " Fzf --------------------------------- {{{

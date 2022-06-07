@@ -1,6 +1,6 @@
 {
+    "python.jediEnabled": false,
     "eslint.autoFixOnSave": true,
-    "python.jediPath": "/Users/chasemiller/.pyenv/versions/3.6.8/lib/python3.6/site-packages",
     "coc.source.file.triggerCharacters":  [".", "/"],
     "suggest.completionItemKindLabels": {
 		"keyword": "\uf1de",
