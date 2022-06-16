@@ -13,7 +13,7 @@ endfunction
 " }}}
 
 " External Plugins
-call plug#begin("~/.vim/plugged")
+call plug#begin("~/.local/share/nvim/site")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_global_extensions = [
                 \ 'coc-tsserver',
